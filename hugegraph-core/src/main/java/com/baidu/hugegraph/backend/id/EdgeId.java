@@ -193,7 +193,8 @@ public class EdgeId implements Id {
         String[] idParts = SplicingIdGenerator.split(id);
         if (!(idParts.length == 4 || idParts.length == 5)) {
             throw new NotFoundException("Edge id must be formatted as 4~5 parts"
-                                        + ", but got '%s'", id);
+                                        + ", but got %s parts,  '%s'",
+                                        idParts.length, id);
         }
         try {
             if (idParts.length == 4) {
