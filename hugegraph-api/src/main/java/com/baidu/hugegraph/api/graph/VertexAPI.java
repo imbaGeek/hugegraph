@@ -152,6 +152,7 @@ public class VertexAPI extends BatchAPI {
                 this.updateExistElement(oldVertex, newVertex,
                                         req.updateStrategies);
                 map.put(newVertexId, newVertex);
+                System.out.println(newVertex);
             });
 
             // 2.Get all oldVertices and update with new vertices
@@ -167,6 +168,7 @@ public class VertexAPI extends BatchAPI {
             List<Vertex> vertices = new ArrayList<>(map.size());
             map.values().forEach(finalVertex -> {
                 vertices.add(g.addVertex(finalVertex.properties()));
+                System.out.println(finalVertex);
             });
 
             // If return ids, the ids.size() maybe different with the origins'
