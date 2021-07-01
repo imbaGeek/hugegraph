@@ -12,5 +12,5 @@ MYSQL_PASSWORD=123456
 sed -i "s/jdbc.username=.*/jdbc.username=$MYSQL_USERNAME/" $CONF
 sed -i "s/jdbc.password=.*/jdbc.password=$MYSQL_PASSWORD/" $CONF
 
-docker pull mysql:5.7
-docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+#docker pull mysql:5.7
+#docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
