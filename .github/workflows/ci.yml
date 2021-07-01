@@ -51,7 +51,7 @@ jobs:
           $TRAVIS_DIR/install-backend.sh ${{ matrix.BACKEND }}
 
       - name: Init Mysql Env
-        - uses: mirromutth/mysql-action@v1.1
+        uses: mirromutth/mysql-action@v1.1
           with:
             host port: 3306 # Optional, default value is 3306. The port of host
             container port: 3306 # Optional, default value is 3306. The port of container
