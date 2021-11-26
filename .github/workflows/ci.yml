@@ -20,7 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        BACKEND: [memory, cassandra, scylladb, hbase, rocksdb, mysql, postgresql]
+        BACKEND: [mysql, postgresql]
+        #        BACKEND: [memory, cassandra, scylladb, hbase, rocksdb, mysql, postgresql]
         JAVA_VERSION: ['8']
 
     steps:
