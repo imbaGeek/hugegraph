@@ -38,3 +38,4 @@ To build without executing tests:
 To find the Java binary in your environment, run the appropriate command for your operating system:
 * Linux/macOS: `which java`
 * Windows: `for %i in (java.exe) do @echo. %~$PATH:i`
+
