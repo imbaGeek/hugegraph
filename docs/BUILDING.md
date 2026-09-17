@@ -38,15 +38,3 @@ To build without executing tests:
 To find the Java binary in your environment, run the appropriate command for your operating system:
 * Linux/macOS: `which java`
 * Windows: `for %i in (java.exe) do @echo. %~$PATH:i`
-
-
-## CI paths
-
-PD/Store, cluster, Docker and dependency workflows use native GitHub Actions PR
-path filters. Their module inputs and shared build configuration trigger checks;
-README and agent instruction files do not. Text fixtures and dependency inventories
-remain included. Push runs retain their existing coverage.
-
-Server, Commons, CodeQL and license workflows remain unfiltered because they
-provide required checks. Skipping a required workflow by path can leave it pending.
-If required checks change, revisit these filters together with `.asf.yaml`.
