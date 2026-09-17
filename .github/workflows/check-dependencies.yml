@@ -4,14 +4,24 @@ name: "3rd-party"
 on:
   push:
     branches:
-      - /^release-.*$/
+      - 'release-*'
   pull_request:
 
 permissions:
   contents: read
 
 jobs:
+  changes:
+    uses: ./.github/workflows/ci-scope.yml
+    permissions:
+      contents: read
+      pull-requests: read
+    with:
+      scope: dependencies
+
   dependency-check:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     env:
       USE_STAGE: 'false' # Whether to include the stage repository.

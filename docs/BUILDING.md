@@ -39,3 +39,17 @@ To find the Java binary in your environment, run the appropriate command for you
 * Linux/macOS: `which java`
 * Windows: `for %i in (java.exe) do @echo. %~$PATH:i`
 
+
+## CI change selection
+
+Pull requests use `.github/workflows/ci-scope.yml` to skip unrelated build jobs.
+Known documentation changes skip ordinary Maven and Docker builds; source resources
+(including text fixtures), shared POMs and CI configuration still trigger relevant checks.
+Shared component changes include downstream modules. Unknown paths are handled conservatively.
+Dependency compilation runs for POMs, dependency inventories, packaged JARs and build configuration.
+
+Workflow triggers and required job names remain present, avoiding pending required checks.
+CodeQL, license checks and dependency review remain enabled. Push, scheduled and manual runs
+retain their existing coverage. Failed or incomplete file discovery falls back to running CI.
+
+Validate path selection locally with `node .github/scripts/test-ci-scope.cjs`.

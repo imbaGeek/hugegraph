@@ -10,7 +10,17 @@ on:
 
 # TODO: consider merge to one ci.yml file
 jobs:
+  changes:
+    uses: ./.github/workflows/ci-scope.yml
+    permissions:
+      contents: read
+      pull-requests: read
+    with:
+      scope: distributed
+
   struct:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     env:
       USE_STAGE: 'false'
@@ -64,7 +74,8 @@ jobs:
           mvn -U -ntp -pl hugegraph-struct test
 
   pd:
-    needs: struct
+    needs: [changes, struct]
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     env:
       # TODO: avoid duplicated env setup in pd & store
@@ -203,7 +214,8 @@ jobs:
           fail_ci_if_error: false
 
   store:
-    needs: struct
+    needs: [changes, struct]
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     env:
       USE_STAGE: 'false' # Whether to include the stage repository.
@@ -347,7 +359,8 @@ jobs:
           fail_ci_if_error: false
 
   hstore:
-    needs: struct
+    needs: [changes, struct]
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     env:
       USE_STAGE: 'false' # Whether to include the stage repository.

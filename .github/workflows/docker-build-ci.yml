@@ -23,23 +23,19 @@ on:
       - master
       - 'release-*'
   pull_request:
-    paths:
-      - '.github/workflows/docker-build-ci.yml'
-      - 'docker/bake.hcl'
-      - '.dockerignore'
-      - '.mvn/**'
-      - 'pom.xml'
-      - 'hugegraph-commons/**'
-      - 'hugegraph-cluster-test/**'
-      - 'hugegraph-pd/**'
-      - 'hugegraph-store/**'
-      - 'hugegraph-struct/**'
-      - 'hugegraph-server/**'
-      - 'docker/hbase/**'
-      - 'install-dist/**'
 
 jobs:
+  changes:
+    uses: ./.github/workflows/ci-scope.yml
+    permissions:
+      contents: read
+      pull-requests: read
+    with:
+      scope: docker
+
   docker-bake-check:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -103,6 +99,8 @@ jobs:
           ' /tmp/hugegraph-bake.json
 
   docker-build:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
