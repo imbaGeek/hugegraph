@@ -40,16 +40,13 @@ To find the Java binary in your environment, run the appropriate command for you
 * Windows: `for %i in (java.exe) do @echo. %~$PATH:i`
 
 
-## CI change selection
+## CI paths
 
-Pull requests use `.github/workflows/ci-scope.yml` to skip unrelated build jobs.
-Known documentation changes skip ordinary Maven and Docker builds; source resources
-(including text fixtures), shared POMs and CI configuration still trigger relevant checks.
-Shared component changes include downstream modules. Unknown paths are handled conservatively.
-Dependency compilation runs for POMs, dependency inventories, packaged JARs and build configuration.
+PD/Store, cluster, Docker and dependency workflows use native GitHub Actions PR
+path filters. Their module inputs and shared build configuration trigger checks;
+README and agent instruction files do not. Text fixtures and dependency inventories
+remain included. Push runs retain their existing coverage.
 
-Workflow triggers and required job names remain present, avoiding pending required checks.
-CodeQL, license checks and dependency review remain enabled. Push, scheduled and manual runs
-retain their existing coverage. Failed or incomplete file discovery falls back to running CI.
-
-Validate path selection locally with `node .github/scripts/test-ci-scope.cjs`.
+Server, Commons, CodeQL and license workflows remain unfiltered because they
+provide required checks. Skipping a required workflow by path can leave it pending.
+If required checks change, revisit these filters together with `.asf.yaml`.
